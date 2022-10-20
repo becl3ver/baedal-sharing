@@ -10,7 +10,6 @@ import com.fourfifths.android.baedalsharing.utils.FirebaseAuthUtils
 import com.fourfifths.android.baedalsharing.databinding.ActivitySplashBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import io.getstream.chat.android.ui.message.MessageListActivity
 
 class SplashActivity : AppCompatActivity() {
     private val TAG = SplashActivity::class.java.simpleName
@@ -29,11 +28,11 @@ class SplashActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         Handler(Looper.getMainLooper()).postDelayed({
-            checkSignUpFinished()
+            checkCompletionOfSignUp()
         }, 2000)
     }
 
-    private fun checkSignUpFinished() {
+    private fun checkCompletionOfSignUp() {
         val uid = FirebaseAuthUtils.getUid()
         if (uid == null) {
             startActivity(

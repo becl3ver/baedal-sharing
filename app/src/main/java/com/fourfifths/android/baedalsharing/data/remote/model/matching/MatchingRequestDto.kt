@@ -4,7 +4,7 @@ data class MatchingRequestDto(
     val uid: String,
     val isCurrent: Boolean,
     val latitude: Double,
-    val longitude: String,
+    val longitude: Double,
     val day: Int,
     val time: Int,
 )

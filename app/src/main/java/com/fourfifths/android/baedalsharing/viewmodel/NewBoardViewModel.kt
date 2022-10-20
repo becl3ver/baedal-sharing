@@ -12,7 +12,7 @@ class NewBoardViewModel : ViewModel() {
     val boardTitle = MutableLiveData("")
     val boardContent = MutableLiveData("")
 
-    private fun pushBoard(category: Int) {
+    /*private fun pushBoard(category: Int) {
         val title = boardTitle.value
         val content = boardContent.value
 
@@ -30,5 +30,5 @@ class NewBoardViewModel : ViewModel() {
 
         val db = FirebaseFirestore.getInstance()
         db.collection("Boards").add(boardDataModel)
-    }
+    }*/
 }

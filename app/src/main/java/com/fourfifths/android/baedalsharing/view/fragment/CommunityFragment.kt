@@ -2,27 +2,33 @@ package com.fourfifths.android.baedalsharing.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.fourfifths.android.baedalsharing.CategoryDialog
+import com.fourfifths.android.baedalsharing.CategoryDialogInterface
 import com.fourfifths.android.baedalsharing.databinding.FragmentCommunityBinding
 import com.fourfifths.android.baedalsharing.view.activity.NewBoardActivity
 import com.fourfifths.android.baedalsharing.view.adapter.CommunityRecyclerViewAdapter
-import com.fourfifths.android.baedalsharing.viewmodel.MainViewModel
+import com.fourfifths.android.baedalsharing.viewmodel.CommunityViewModel
 
-class CommunityFragment : Fragment() {
+class CommunityFragment : Fragment(), CategoryDialogInterface {
     private lateinit var adapter: CommunityRecyclerViewAdapter
-    private val viewModel: MainViewModel by activityViewModels()
+    private val viewModel: CommunityViewModel by activityViewModels()
 
-    private var cnt = 1
+    private val TAG = CommunityFragment::class.java.simpleName
+
     private var _binding: FragmentCommunityBinding? = null
     private val binding get() = _binding!!
+
+    private var isEnd = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,13 +37,10 @@ class CommunityFragment : Fragment() {
         _binding = FragmentCommunityBinding.inflate(inflater, container, false)
 
         binding.viewModel = viewModel
-        viewModel.initBoards()
 
-        binding.rvCommunity.apply {
-            binding.rvCommunity.layoutManager =  LinearLayoutManager(context)
-            adapter = CommunityRecyclerViewAdapter()
-            binding.rvCommunity.adapter = adapter
-        }
+        initRecyclerView()
+
+        viewModel.initBoards(1)
 
         viewModel.boards.observe(viewLifecycleOwner, Observer {
             val position = adapter.itemCount
@@ -49,21 +52,38 @@ class CommunityFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                val position = (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
+                val position =
+                    (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
 
-                if(!binding.rvCommunity.canScrollVertically(1) && position == recyclerView.adapter!!.itemCount - 1) {
+                if (!binding.rvCommunity.canScrollVertically(1) && position == recyclerView.adapter!!.itemCount - 1 && !isEnd) {
                     adapter.deleteProgressBar()
-                    viewModel.loadBoards()
+
+                    if (!viewModel.loadMoreBoards(1)) {
+                        isEnd = true
+                        Toast.makeText(context, "마지막 글입니다.", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         })
 
         binding.btnNewBoard.setOnClickListener {
-            // TODO : 커스텀 alertdialog
-            startActivity(Intent(context, NewBoardActivity::class.java).putExtra("category", 1))
+            val dialog = CategoryDialog(this)
+            dialog.show(activity?.supportFragmentManager!!, "CategoryDialog")
         }
 
         return binding.root
+    }
+
+    override fun onCategoryButtonOnClick(category: Int) {
+        val intent = Intent(context, NewBoardActivity::class.java)
+        intent.putExtra("category", category)
+        startActivity(intent)
+    }
+
+    private fun initRecyclerView() {
+        binding.rvCommunity.layoutManager = LinearLayoutManager(context)
+        adapter = CommunityRecyclerViewAdapter()
+        binding.rvCommunity.adapter = adapter
     }
 
     override fun onDestroyView() {

@@ -218,4 +218,8 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
+# Font files
+.ttf
+.otf
+
 # End of https://www.toptal.com/developers/gitignore/api/android,androidstudio,firebase,kotlin,java

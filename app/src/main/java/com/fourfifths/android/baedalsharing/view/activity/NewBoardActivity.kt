@@ -9,11 +9,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.fourfifths.android.baedalsharing.App
 import com.fourfifths.android.baedalsharing.R
 import com.fourfifths.android.baedalsharing.data.remote.model.board.BoardDataModel
 import com.fourfifths.android.baedalsharing.databinding.ActivityNewBoardBinding
 import com.fourfifths.android.baedalsharing.utils.FirebaseAuthUtils
 import com.fourfifths.android.baedalsharing.viewmodel.NewBoardViewModel
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 
 class NewBoardActivity : AppCompatActivity() {
@@ -21,7 +23,7 @@ class NewBoardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNewBoardBinding
     private lateinit var viewModel: NewBoardViewModel
-    private var category = 0
+    private var category: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +34,7 @@ class NewBoardActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        category = intent.getIntExtra("category", 0)
+        category = intent.getLongExtra("category", 0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -46,13 +48,13 @@ class NewBoardActivity : AppCompatActivity() {
 
             }
             R.id.actionSubmit -> {
-                pushNewBoard()
+                postNewBoard()
             }
         }
         return true
     }
 
-    private fun pushNewBoard() {
+    private fun postNewBoard() {
         val title = viewModel.boardTitle.value!!
         val content = viewModel.boardContent.value!!
 
@@ -68,13 +70,14 @@ class NewBoardActivity : AppCompatActivity() {
             return
         }
 
-        val author = FirebaseAuthUtils.getUid()!!
-
         val boardDataModel = BoardDataModel(
             title,
             content,
             category,
-            author
+            FirebaseAuthUtils.getUid()!!,
+            App.prefs.getChatName()!!,
+            0.toLong(),
+            Timestamp.now()
         )
 
         val db = FirebaseFirestore.getInstance()

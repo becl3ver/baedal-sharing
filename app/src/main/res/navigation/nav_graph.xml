@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/matching_fragment">
+
+    <keep_state_fragment
+        android:id="@+id/matching_fragment"
+        android:name="com.fourfifths.android.baedalsharing.view.fragment.MatchingFragment"
+        tools:layout="@layout/fragment_matching"
+        android:label="MatchingFragment"/>
+
+    <keep_state_fragment
+        android:id="@+id/community_fragment"
+        android:name="com.fourfifths.android.baedalsharing.view.fragment.CommunityFragment"
+        tools:layout="@layout/fragment_community"
+        android:label="CommunityFragment" />
+
+    <keep_state_fragment
+        android:id="@+id/chatting_fragment"
+        android:name="com.fourfifths.android.baedalsharing.view.fragment.ChattingFragment"
+        tools:layout="@layout/fragment_chatting"
+        android:label="ChattingFragment" />
+
+    <keep_state_fragment
+        android:id="@+id/my_page_fragment"
+        android:name="com.fourfifths.android.baedalsharing.view.fragment.MyPageFragment"
+        tools:layout="@layout/fragment_my_page"
+        android:label="MyPageFragment" />
+</navigation>

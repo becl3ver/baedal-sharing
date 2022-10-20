@@ -10,8 +10,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 object MatchingApi {
-    private const val BASE_URL = ""
-
     private val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     private val client = OkHttpClient.Builder()
