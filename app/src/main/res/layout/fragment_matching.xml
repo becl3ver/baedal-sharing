@@ -9,7 +9,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:orientation="vertical"
-        tools:context=".view.fragment.MatchingFragment">
+        tools:context=".view.matching.MatchingFragment">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -21,7 +21,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/TitleTextView"
+                    style="@style/MainColorTextView"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
                     android:text="메뉴 선택"
@@ -41,7 +41,7 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/tmp" />
+                            android:src="@drawable/ic_tmp_menu" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/tmp" />
+                            android:src="@drawable/ic_tmp_menu" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/tmp" />
+                            android:src="@drawable/ic_tmp_menu" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -110,7 +110,7 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/tmp" />
+                            android:src="@drawable/ic_tmp_menu" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -131,7 +131,7 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/tmp" />
+                            android:src="@drawable/ic_tmp_menu" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -152,7 +152,7 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/tmp" />
+                            android:src="@drawable/ic_tmp_menu" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -179,7 +179,7 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/tmp" />
+                            android:src="@drawable/ic_tmp_menu" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -213,7 +213,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/tmp" />
+                        android:src="@drawable/ic_tmp_menu" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -221,7 +221,27 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/main_font"
-                        android:text="운에 맡기겠어"
+                        android:text="운에 맡기기"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnHistory"
+                    style="@style/MatchingMenuButton">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_tmp_menu" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/main_font"
+                        android:text="매칭 기록보기"
                         android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>

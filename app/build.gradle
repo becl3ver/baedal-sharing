@@ -12,12 +12,12 @@ def naverMapClientId = properties.getProperty('naver_map_client_id')
 
 android {
     namespace 'com.fourfifths.android.baedalsharing'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.fourfifths.android.baedalsharing"
         minSdk 26
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -115,5 +115,16 @@ dependencies {
     // FusedLocationSource
     implementation("com.google.android.gms:play-services-location:16.0.0")
 
+    // Number Picker
     implementation 'io.github.ShawnLin013:number-picker:2.4.13'
+
+    // Room Database
+    implementation "androidx.room:room-runtime:2.4.3"
+
+    // Image Cropper
+    implementation("com.vanniktech:android-image-cropper:4.4.0")
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 }

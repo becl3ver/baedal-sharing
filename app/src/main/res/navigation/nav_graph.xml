@@ -7,25 +7,25 @@
 
     <keep_state_fragment
         android:id="@+id/matching_fragment"
-        android:name="com.fourfifths.android.baedalsharing.view.fragment.MatchingFragment"
+        android:name="com.fourfifths.android.baedalsharing.view.matching.MatchingFragment"
         tools:layout="@layout/fragment_matching"
         android:label="MatchingFragment"/>
 
     <keep_state_fragment
         android:id="@+id/community_fragment"
-        android:name="com.fourfifths.android.baedalsharing.view.fragment.CommunityFragment"
+        android:name="com.fourfifths.android.baedalsharing.view.board.CommunityFragment"
         tools:layout="@layout/fragment_community"
         android:label="CommunityFragment" />
 
     <keep_state_fragment
         android:id="@+id/chatting_fragment"
-        android:name="com.fourfifths.android.baedalsharing.view.fragment.ChattingFragment"
+        android:name="com.fourfifths.android.baedalsharing.view.chatting.ChattingFragment"
         tools:layout="@layout/fragment_chatting"
         android:label="ChattingFragment" />
 
     <keep_state_fragment
         android:id="@+id/my_page_fragment"
-        android:name="com.fourfifths.android.baedalsharing.view.fragment.MyPageFragment"
+        android:name="com.fourfifths.android.baedalsharing.view.auth.MyPageFragment"
         tools:layout="@layout/fragment_my_page"
         android:label="MyPageFragment" />
 </navigation>

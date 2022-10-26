@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.fragment.CompleteSignUpFragment">
+        tools:context=".view.auth.CompleteSignUpFragment">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etNickname"
@@ -27,7 +27,7 @@
                 android:id="@+id/nicknameArea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="12"
+                android:maxLength="10"
                 android:hint="닉네임"
                 android:text="@={viewModel.nickname}" />
 
@@ -46,6 +46,7 @@
         <Button
             android:id="@+id/btnAccept"
             android:text="닉네임 설정"
+            style="@style/MainFillButton"
             android:layout_margin="10dp"
             android:enabled="@{viewModel.acceptButton}"
             android:layout_width="match_parent"

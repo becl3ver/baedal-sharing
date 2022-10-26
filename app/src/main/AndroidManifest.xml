@@ -5,9 +5,10 @@
     <uses-permission android:name="android.permission.INTERNET" /> <!-- Location Permission -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".App"
+        android:name=".view.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,7 +19,35 @@
         android:theme="@style/Theme.BaedalSharing"
         tools:targetApi="31">
         <activity
-            android:name=".BaseActivity"
+            android:name=".view.board.BoardViewActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.etc.LongTextActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.auth.ProfileActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.matching.HistoryActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".base.BaseActivity"
             android:exported="false"
             android:label="@string/title_activity_base"
             android:theme="@style/Theme.BaedalSharing.NoActionBar">
@@ -40,42 +69,42 @@
             android:value="${NAVER_MAP_CLIENT_ID}" />
 
         <activity
-            android:name=".view.activity.LocationActivity"
+            android:name=".view.matching.LocationActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.activity.MatchingActivity"
+            android:name=".view.matching.MatchingActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.activity.NewBoardActivity"
+            android:name=".view.board.NewBoardActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.activity.MessageListActivity"
+            android:name=".view.chatting.MessageListActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.activity.SignUpActivity"
+            android:name=".view.auth.SignUpActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.activity.SplashActivity"
+            android:name=".view.auth.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -88,14 +117,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.activity.IntroActivity"
+            android:name=".view.auth.IntroActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name=".view.MainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

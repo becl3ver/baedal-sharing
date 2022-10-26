@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.LocationActivity">
+    tools:context=".view.matching.LocationActivity">
 
     <com.naver.maps.map.MapView
         android:id="@+id/mapView"
@@ -28,7 +28,7 @@
 
     <LinearLayout
         android:id="@+id/btnSubmit"
-        android:background="@drawable/view_filled_round_edge"
+        android:background="@drawable/view_main_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:translationZ="1dp"

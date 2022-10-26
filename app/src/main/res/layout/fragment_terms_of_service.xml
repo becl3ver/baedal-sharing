@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.fragment.TermsOfServiceFragment">
+        tools:context=".view.auth.TermsOfServiceFragment">
 
         <TextView
             android:id="@+id/tvNotice"
@@ -55,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            style="@style/MainFillButton"
             android:enabled="@{viewModel.isAgreed}"
             android:text="개인 정보 수집 및 이용 동의"
             app:layout_constraintBottom_toBottomOf="parent"

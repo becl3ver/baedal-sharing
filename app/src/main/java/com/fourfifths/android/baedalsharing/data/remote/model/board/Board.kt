@@ -1,13 +1,14 @@
 package com.fourfifths.android.baedalsharing.data.remote.model.board
 
-import com.google.firebase.Timestamp
+import java.io.Serializable
 
 data class Board(
+    val id: String,
     val title: String,
     val content: String,
     val category: Long,
     val uid: String,
     val nickname: String,
     val recommend: Long,
-    val timestamp: Timestamp
-)
+    var date: String
+) : Serializable

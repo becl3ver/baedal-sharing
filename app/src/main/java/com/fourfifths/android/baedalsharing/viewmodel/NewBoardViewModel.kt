@@ -11,24 +11,4 @@ class NewBoardViewModel : ViewModel() {
 
     val boardTitle = MutableLiveData("")
     val boardContent = MutableLiveData("")
-
-    /*private fun pushBoard(category: Int) {
-        val title = boardTitle.value
-        val content = boardContent.value
-
-        if(title == null || content == null) {
-            // TODO : 액티비티에서 observe 해서 Toast 띄우기
-            return
-        }
-
-        val boardDataModel = BoardDataModel(
-            boardTitle.value!!,
-            boardContent.value!!,
-            category,
-            FirebaseAuthUtils.getUid()!!
-        )
-
-        val db = FirebaseFirestore.getInstance()
-        db.collection("Boards").add(boardDataModel)
-    }*/
 }

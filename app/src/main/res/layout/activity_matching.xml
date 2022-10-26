@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?colorOnPrimary"
-    app:layoutDescription="@xml/activity_matching_scene"
-    tools:context=".view.activity.MatchingActivity">
+    tools:context=".view.matching.MatchingActivity">
 
     <Button
         android:id="@+id/btnLocation"
@@ -21,7 +20,7 @@
 
     <TextView
         android:id="@+id/tvResult"
-        style="@style/TitleTextView"
+        style="@style/MainColorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -33,7 +32,7 @@
 
     <TextView
         android:id="@+id/tvMatchingTimeNotice"
-        style="@style/TitleTextView"
+        style="@style/MainColorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -73,17 +72,15 @@
     </RadioGroup>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/llNewComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rgTime">
 
         <TextView
-            style="@style/TitleTextView"
+            style="@style/MainColorTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="드시는 시간을 알려주세요" />
@@ -137,12 +134,13 @@
 
     <Button
         android:id="@+id/btnSubmit"
-        style="@style/MainFillButton"
+        style="@style/MainDisabledButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:enabled="false"
         android:text="매칭 시작!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

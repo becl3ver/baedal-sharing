@@ -18,11 +18,11 @@ class PreferenceUtils(context: Context) {
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
 
-    fun setChatName(name: String) {
+    fun setNickname(name: String) {
         prefs.edit().putString("chatName", name).apply()
     }
 
-    fun getChatName(): String? {
+    fun getNickname(): String? {
         return prefs.getString("chatName", null)
     }
 

@@ -31,8 +31,8 @@ class FirebaseService : FirebaseMessagingService() {
     }
 
     private fun createNotification() {
-        val name = "name"
-        val descriptionText = "description"
+        val name = "매칭 결과"
+        val descriptionText = "매칭 성공 결과 및 실패 여부를 안내 받습니다."
         val importance = NotificationManager.IMPORTANCE_DEFAULT
 
         val channel = NotificationChannel(CHANNEL_ID, name, importance)
