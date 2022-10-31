@@ -17,17 +17,16 @@ import com.fourfifths.android.baedalsharing.databinding.FragmentCommunityBinding
 import com.fourfifths.android.baedalsharing.viewmodel.CommunityViewModel
 
 class CommunityFragment : Fragment(), CategoryDialogInterface {
-    private lateinit var adapter: CommunityRecyclerViewAdapter
-    private val viewModel: CommunityViewModel by activityViewModels()
-
     private val TAG = CommunityFragment::class.java.simpleName
 
     private var _binding: FragmentCommunityBinding? = null
     private val binding get() = _binding!!
 
-    private var category = 0
+    private lateinit var adapter: CommunityRecyclerViewAdapter
+    private val viewModel: CommunityViewModel by activityViewModels()
 
-    private var isEnd = false
+    private var category = 0
+    private var isLoading = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,32 +38,10 @@ class CommunityFragment : Fragment(), CategoryDialogInterface {
         binding.lifecycleOwner = this.viewLifecycleOwner
 
         initRecyclerView()
+        initObserver()
+        initScrollListener()
 
         viewModel.initBoards(category)
-
-        viewModel.boards.observe(viewLifecycleOwner, Observer {
-            val position = adapter.itemCount
-            adapter.addBoards(it)
-            adapter.notifyItemRangeInserted(position, adapter.itemCount - position)
-        })
-
-        binding.rvCommunity.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                val position =
-                    (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
-
-                if (!binding.rvCommunity.canScrollVertically(1) && position == recyclerView.adapter!!.itemCount - 1 && !isEnd) {
-                    adapter.deleteProgressBar()
-
-                    if (!viewModel.loadMoreBoards(1)) {
-                        isEnd = true
-                        Toast.makeText(context, "마지막 글입니다.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        })
 
         binding.btnNewBoard.setOnClickListener {
             val dialog = CategoryDialog(this)
@@ -74,20 +51,54 @@ class CommunityFragment : Fragment(), CategoryDialogInterface {
         return binding.root
     }
 
-    override fun onCategoryButtonClick(category: Long) {
-        val intent = Intent(context, NewBoardActivity::class.java)
-        intent.putExtra("category", category)
-        startActivity(intent)
-    }
-
     private fun initRecyclerView() {
         binding.rvCommunity.layoutManager = LinearLayoutManager(context)
         adapter = CommunityRecyclerViewAdapter(requireContext())
         binding.rvCommunity.adapter = adapter
     }
 
+    private fun initObserver() {
+        viewModel.boards.observe(viewLifecycleOwner, Observer {
+            adapter.addBoards(it)
+            isLoading = false
+        })
+
+        viewModel.isLastItemVisible.observe(viewLifecycleOwner, Observer {
+            if(it) {
+                adapter.removeBoard()
+                Toast.makeText(context, "마지막 글입니다.", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun initScrollListener() {
+        binding.rvCommunity.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if(isLoading) {
+                    return
+                }
+
+                val position =
+                    (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
+
+                if (!binding.rvCommunity.canScrollVertically(1) && position == recyclerView.adapter!!.itemCount - 1) {
+                    isLoading = true
+                    viewModel.loadMoreBoards(category)
+                }
+            }
+        })
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onCategoryButtonClick(category: Long) {
+        val intent = Intent(context, NewBoardActivity::class.java)
+        intent.putExtra("category", category)
+        startActivity(intent)
     }
 }

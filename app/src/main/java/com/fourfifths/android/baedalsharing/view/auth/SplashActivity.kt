@@ -35,6 +35,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun checkCompletionOfSignUp() {
         val uid = FirebaseAuthUtils.getUid()
+        Log.d(TAG, uid.toString())
         if (uid == null) {
             startActivity(
                 Intent(
@@ -44,6 +45,7 @@ class SplashActivity : AppCompatActivity() {
             finish()
         } else {
             db.collection("UserInfo").document(uid).get().addOnSuccessListener { document ->
+                Log.d(TAG, document.toString())
                 startActivity(
                     Intent(
                         this,
@@ -53,8 +55,7 @@ class SplashActivity : AppCompatActivity() {
                 finish()
             }
                 .addOnFailureListener { exception ->
-                    // TODO : 종료 안내
-                    Log.d(TAG, "get failed with ", exception)
+                    Log.d(TAG, "get failed with ${exception.message}")
                     finish()
                 }
         }

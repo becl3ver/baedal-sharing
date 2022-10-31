@@ -1,146 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?colorOnPrimary"
-    tools:context=".view.matching.MatchingActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <Button
-        android:id="@+id/btnLocation"
-        style="@style/MainFillButton"
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fourfifths.android.baedalsharing.viewmodel.MatchingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="위치 설정"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="?colorOnPrimary"
+        tools:context=".view.matching.MatchingActivity">
 
-    <TextView
-        android:id="@+id/tvResult"
-        style="@style/MainColorTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
-        android:text="드시고 싶은 위치를 설정해주세요."
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnLocation" />
-
-    <TextView
-        android:id="@+id/tvMatchingTimeNotice"
-        style="@style/MainColorTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:text="언제 드시나요?"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvResult" />
-
-    <RadioGroup
-        android:id="@+id/rgTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvMatchingTimeNotice">
-
-        <RadioButton
-            android:id="@+id/rbNow"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btnLocation"
+            style="@style/MainFillButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/main_color"
-            android:checked="true"
-            android:fontFamily="@font/main_font"
-            android:text="지금!" />
-
-        <RadioButton
-            android:id="@+id/rbLater"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:buttonTint="@color/main_color"
-            android:fontFamily="@font/main_font"
-            android:text="나중에!" />
-    </RadioGroup>
-
-    <LinearLayout
-        android:id="@+id/llNewComment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/rgTime">
+            android:layout_margin="20dp"
+            android:text="위치 설정"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tvResult"
             style="@style/MainColorTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="드시는 시간을 알려주세요" />
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:text="드시고 싶은 위치를 설정해주세요."
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnLocation" />
+
+        <TextView
+            android:id="@+id/tvMatchingTimeNotice"
+            style="@style/MainColorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:text="언제 드시나요?"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvResult" />
+
+        <RadioGroup
+            android:id="@+id/rgTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMatchingTimeNotice">
+
+            <RadioButton
+                android:id="@+id/rbNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/main_color"
+                android:checked="true"
+                android:fontFamily="@font/main_font"
+                android:text="지금!" />
+
+            <RadioButton
+                android:id="@+id/rbLater"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:buttonTint="@color/main_color"
+                android:fontFamily="@font/main_font"
+                android:text="나중에!" />
+        </RadioGroup>
 
         <LinearLayout
+            android:id="@+id/llNewComment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.shawnlin.numberpicker.NumberPicker
-                android:id="@+id/npDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:np_dividerColor="@android:color/transparent"
-                app:np_selectedTextColor="@color/main_color"
-                app:np_textColor="@color/main_color" />
-
-            <com.shawnlin.numberpicker.NumberPicker
-                android:id="@+id/npHour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                app:np_dividerColor="@android:color/transparent"
-                app:np_formatter="@string/number_picker_formatter"
-                app:np_max="23"
-                app:np_min="0"
-                app:np_selectedTextColor="@color/main_color"
-                app:np_textColor="@color/main_color" />
+            android:layout_margin="30dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/rgTime">
 
             <TextView
+                style="@style/MainColorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=":"
-                android:textColor="@color/main_color"
-                android:textSize="30sp" />
+                android:text="드시는 시간을 알려주세요" />
 
-            <com.shawnlin.numberpicker.NumberPicker
-                android:id="@+id/npMinute"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                app:np_dividerColor="@android:color/transparent"
-                app:np_selectedTextColor="@color/main_color"
-                app:np_textColor="@color/main_color" />
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.shawnlin.numberpicker.NumberPicker
+                    android:id="@+id/npDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:np_dividerColor="@android:color/transparent"
+                    app:np_selectedTextColor="@color/main_color"
+                    app:np_textColor="@color/main_color" />
+
+                <com.shawnlin.numberpicker.NumberPicker
+                    android:id="@+id/npHour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    app:np_dividerColor="@android:color/transparent"
+                    app:np_formatter="@string/number_picker_formatter"
+                    app:np_max="23"
+                    app:np_min="0"
+                    app:np_selectedTextColor="@color/main_color"
+                    app:np_textColor="@color/main_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textColor="@color/main_color"
+                    android:textSize="30sp" />
+
+                <com.shawnlin.numberpicker.NumberPicker
+                    android:id="@+id/npMinute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    app:np_dividerColor="@android:color/transparent"
+                    app:np_selectedTextColor="@color/main_color"
+                    app:np_textColor="@color/main_color" />
+            </LinearLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnSubmit"
-        style="@style/MainDisabledButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:enabled="false"
-        android:text="매칭 시작!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btnSubmit"
+            style="@style/MainDisabledButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:enabled="false"
+            android:text="매칭 시작!"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

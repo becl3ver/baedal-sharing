@@ -8,17 +8,19 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.fourfifths.android.baedalsharing.R
-import com.fourfifths.android.baedalsharing.data.remote.model.matching.MatchingRequestDto
-import com.fourfifths.android.baedalsharing.data.remote.repository.MatchingRepository
 import com.fourfifths.android.baedalsharing.databinding.ActivityMatchingBinding
-import com.fourfifths.android.baedalsharing.utils.FirebaseAuthUtils
+import com.fourfifths.android.baedalsharing.viewmodel.MatchingViewModel
 
 class MatchingActivity : AppCompatActivity() {
     private val TAG = MatchingActivity::class.java.simpleName
 
     private lateinit var binding: ActivityMatchingBinding
     private lateinit var getLocationLauncher: ActivityResultLauncher<Intent>
+    private lateinit var viewModel: MatchingViewModel
 
     private var menu: Int = 0
     private var latitude: Double? = null
@@ -26,8 +28,11 @@ class MatchingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMatchingBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_matching)
+
+        viewModel = ViewModelProvider(this)[MatchingViewModel::class.java]
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         supportActionBar?.title = "매칭"
 
@@ -61,35 +66,19 @@ class MatchingActivity : AppCompatActivity() {
             getLocationLauncher.launch(Intent(this, LocationActivity::class.java))
         }
 
-        binding.btnSubmit.setOnClickListener {
-            val isCurrent = binding.rbNow.isChecked
-            var day = 0
-            var time = 0
-
-            if (!isCurrent) {
-                day = getDueDay()
-                time = getDueTime()
+        viewModel.matchingJoinResult.observe(this, Observer {
+            if(it.equals("success")) {
+                finish()
             }
+        })
 
-            val repository = MatchingRepository()
-            val token = FirebaseAuthUtils.getUid()!!
-            val matchingRequestDto = MatchingRequestDto(
-                FirebaseAuthUtils.getUid()!!,
-                isCurrent,
-                latitude!!,
-                longitude!!,
-                day,
-                time
-            )
+        viewModel.errorMessage.observe(this, Observer {
+            Log.d(TAG, it)
+            Toast.makeText(this, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+        })
 
-            val result = repository.setMatching(token, matchingRequestDto)
-
-            Toast.makeText(
-                this,
-                if (result == "success") "매칭이 시작되었습니다." else "오류가 발생했습니다.",
-                Toast.LENGTH_SHORT
-            ).show()
-
+        binding.btnSubmit.setOnClickListener {
+            // viewModel.setMatching()
             finish()
         }
     }

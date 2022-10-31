@@ -3,8 +3,8 @@ package com.fourfifths.android.baedalsharing.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.fourfifths.android.baedalsharing.*
@@ -16,13 +16,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel: CommunityViewModel by viewModels()
+    private lateinit var viewModel: CommunityViewModel
     private val TAG = MainActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "onCreate")
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        setContentView(binding.root)
+        viewModel = ViewModelProvider(this)[CommunityViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 

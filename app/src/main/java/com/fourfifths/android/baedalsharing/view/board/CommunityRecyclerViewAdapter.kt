@@ -63,11 +63,18 @@ class CommunityRecyclerViewAdapter(private val context: Context) :
     }
 
     fun addBoards(boards: MutableList<Board>) {
+        if(items.isNotEmpty()) {
+            items.removeLast()
+        }
+
         items.addAll(boards)
         items.add(null)
+        notifyDataSetChanged()
     }
 
-    fun deleteProgressBar() {
-        items.removeAt(items.size - 1)
+    fun removeBoard() {
+        val position = items.size
+        items.removeLast()
+        notifyItemRemoved(position)
     }
 }

@@ -1,14 +1,11 @@
 package com.fourfifths.android.baedalsharing.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fourfifths.android.baedalsharing.data.remote.model.board.Board
-import com.fourfifths.android.baedalsharing.utils.FirebaseRef
 import com.google.firebase.Timestamp
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.snapshot.Node
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -17,31 +14,40 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class CommunityViewModel : ViewModel() {
+    private val TAG = CommunityViewModel::class.java.simpleName
+    private val LOADING_LIMIT = 5L
+
     private val _boards = MutableLiveData<ArrayList<Board>>()
     val boards: LiveData<ArrayList<Board>> get() = _boards
+
+    private val _isLastItemVisible = MutableLiveData(false)
+    val isLastItemVisible: LiveData<Boolean> get() = _isLastItemVisible
 
     private val db = FirebaseFirestore.getInstance()
     private var lastVisible: DocumentSnapshot? = null
 
-    private var visible: Timestamp? = null
-
     fun initBoards(category: Int) {
-        val query = db.collection("Boards").let {
-            if(category != 0) {
-                it.whereEqualTo("category", category)
-            }
-            it.orderBy("timestamp", Query.Direction.DESCENDING)
-            it.limit(6)
-            it.get()
+        val query = if (category == 0) {
+            db.collection("Boards")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .limit(LOADING_LIMIT)
+                .get()
+        } else {
+            db.collection("Boards")
+                .whereEqualTo("category", 1)
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .limit(LOADING_LIMIT)
+                .get()
         }
 
         query.addOnSuccessListener { value ->
-            if(value != null && value.documents.size != 0) {
+            if (value != null && value.documents.size != 0) {
                 lastVisible = value.documents[value.documents.size - 1]
 
                 val tmp = ArrayList<Board>()
 
                 for (document in value.documents) {
+                    Log.d(TAG, document.id)
                     tmp.add(convertToBoard(document.id, document.data!!))
                 }
 
@@ -50,23 +56,31 @@ class CommunityViewModel : ViewModel() {
         }
     }
 
-    fun loadMoreBoards(category: Int): Boolean {
-        var flag = true
+    fun loadMoreBoards(category: Int) {
+        if (lastVisible == null) {
+            return
+        }
 
-        val query = db.collection("Boards").let {
-            if (category != 0) {
-                it.whereEqualTo("category", category)
-            }
-            it.orderBy("timestamp")
-            it.startAfter(lastVisible)
-            it.limit(6)
-            it.get()
+        val query = if (category == 0) {
+            db.collection("Boards")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .whereLessThan("timestamp", (lastVisible!!.data?.get("timestamp") as Timestamp))
+                .limit(LOADING_LIMIT)
+                .get()
+        } else {
+            db.collection("Boards")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .whereEqualTo("category", 1)
+                .whereLessThan("timestamp", (lastVisible!!.data?.get("timestamp") as Timestamp))
+                .startAfter(lastVisible)
+                .limit(LOADING_LIMIT)
+                .get()
         }
 
         query.addOnSuccessListener { value ->
             if (value != null) {
                 if (value.documents.size == 0) {
-                    flag = false
+                    _isLastItemVisible.value = true
                     return@addOnSuccessListener
                 }
 
@@ -75,14 +89,13 @@ class CommunityViewModel : ViewModel() {
                 val tmp = ArrayList<Board>()
 
                 for (document in value.documents) {
+                    Log.d(TAG, document.id)
                     tmp.add(convertToBoard(document.id, document.data!!))
                 }
 
                 _boards.value = tmp
             }
         }
-
-        return flag
     }
 
     private fun convertToBoard(id: String, data: Map<String, Any>): Board {
