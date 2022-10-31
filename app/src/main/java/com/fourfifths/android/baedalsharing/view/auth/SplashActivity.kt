@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class SplashActivity : AppCompatActivity() {
-    private val TAG = SplashActivity::class.java.simpleName
+    private val TAG = SplashActivity::class.simpleName
 
     private lateinit var binding: ActivitySplashBinding
     private lateinit var auth: FirebaseAuth

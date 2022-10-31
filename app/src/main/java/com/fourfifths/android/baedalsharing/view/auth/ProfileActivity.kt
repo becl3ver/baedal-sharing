@@ -18,7 +18,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 
 class ProfileActivity : AppCompatActivity() {
-    private val TAG = ProfileActivity::class.java.simpleName
+    private val TAG = ProfileActivity::class.simpleName
 
     private val getImage =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

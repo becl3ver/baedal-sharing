@@ -4,7 +4,7 @@ import com.fourfifths.android.baedalsharing.data.remote.api.MatchingApi
 import com.fourfifths.android.baedalsharing.data.remote.model.matching.MatchingRequestDto
 
 class MatchingRepository {
-    private val TAG = MatchingRepository::class.java.simpleName
+    private val TAG = MatchingRepository::class.simpleName
 
     suspend fun setMatching(token: String, matchingRequestDto: MatchingRequestDto) =
         MatchingApi.createApi().setMatching(token, matchingRequestDto)

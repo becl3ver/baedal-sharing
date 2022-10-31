@@ -11,13 +11,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.fourfifths.android.baedalsharing.CategoryDialog
-import com.fourfifths.android.baedalsharing.CategoryDialogInterface
 import com.fourfifths.android.baedalsharing.databinding.FragmentCommunityBinding
 import com.fourfifths.android.baedalsharing.viewmodel.CommunityViewModel
 
 class CommunityFragment : Fragment(), CategoryDialogInterface {
-    private val TAG = CommunityFragment::class.java.simpleName
+    private val TAG = CommunityFragment::class.simpleName
 
     private var _binding: FragmentCommunityBinding? = null
     private val binding get() = _binding!!

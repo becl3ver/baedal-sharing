@@ -10,7 +10,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 class FirebaseService : FirebaseMessagingService() {
-    private val TAG = FirebaseService::class.java.simpleName
+    private val TAG = FirebaseService::class.simpleName
     private val CHANNEL_ID = "matching_result_channel"
 
     override fun onNewToken(token: String) {

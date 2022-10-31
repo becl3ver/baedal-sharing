@@ -5,25 +5,26 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
 import com.fourfifths.android.baedalsharing.R
 import com.fourfifths.android.baedalsharing.databinding.ActivitySignUpBinding
 import com.fourfifths.android.baedalsharing.viewmodel.SignUpViewModel
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
-    private lateinit var transaction: FragmentTransaction
-    private val viewModel: SignUpViewModel by viewModels()
+    private lateinit var viewModel: SignUpViewModel
 
     private val termsOfServiceFragment = TermsOfServiceFragment()
     private val completeSignUpFragment = CompleteSignUpFragment()
 
-    private val TAG = SignUpActivity::class.java.simpleName
+    private val TAG = SignUpActivity::class.simpleName
 
     private var currentFragment = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
+        viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 

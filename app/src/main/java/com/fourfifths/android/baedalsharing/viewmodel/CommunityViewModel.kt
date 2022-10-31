@@ -14,7 +14,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class CommunityViewModel : ViewModel() {
-    private val TAG = CommunityViewModel::class.java.simpleName
+    private val TAG = CommunityViewModel::class.simpleName
     private val LOADING_LIMIT = 5L
 
     private val _boards = MutableLiveData<ArrayList<Board>>()
@@ -34,7 +34,7 @@ class CommunityViewModel : ViewModel() {
                 .get()
         } else {
             db.collection("Boards")
-                .whereEqualTo("category", 1)
+                .whereEqualTo("category", category)
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .limit(LOADING_LIMIT)
                 .get()

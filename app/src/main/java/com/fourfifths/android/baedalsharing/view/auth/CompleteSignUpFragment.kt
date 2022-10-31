@@ -21,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 
 class CompleteSignUpFragment : Fragment() {
-    private val TAG = CompleteSignUpFragment::class.java.simpleName
+    private val TAG = CompleteSignUpFragment::class.simpleName
 
     private var _binding: FragmentCompleteSignUpBinding? = null
     private val binding get() = _binding!!
@@ -43,7 +43,6 @@ class CompleteSignUpFragment : Fragment() {
         db = FirebaseFirestore.getInstance()
 
         binding.btnAccept.setOnClickListener {
-            val nickname = viewModel.nickname.value!!
             FirebaseMessaging.getInstance().token.addOnCompleteListener(
                 OnCompleteListener { task ->
                     if (!task.isSuccessful) {
@@ -57,7 +56,7 @@ class CompleteSignUpFragment : Fragment() {
                     val uid = FirebaseAuthUtils.getUid()
                     val nickname = viewModel.nickname.value!!
                     val token = task.result
-                    val userDataModel = UserDataModel(uid!!, nickname, token, "")
+                    val userDataModel = UserDataModel(uid!!, nickname, token)
 
                     db.collection("UserInfo").document(uid).set(userDataModel)
 

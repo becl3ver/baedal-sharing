@@ -9,7 +9,7 @@ import com.fourfifths.android.baedalsharing.data.remote.repository.MatchingRepos
 import kotlinx.coroutines.launch
 
 class MatchingViewModel(private val repository: MatchingRepository) : ViewModel() {
-    private val TAG = "MatchingViewModel"
+    private val TAG = MatchingViewModel::class.simpleName
 
     private val _matchingJoinResult = MutableLiveData<String>()
     val matchingJoinResult: LiveData<String> get() = _matchingJoinResult

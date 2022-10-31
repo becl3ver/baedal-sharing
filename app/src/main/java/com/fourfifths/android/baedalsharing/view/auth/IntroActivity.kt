@@ -27,7 +27,7 @@ class IntroActivity : AppCompatActivity() {
     private lateinit var client: GoogleSignInClient
     private val db = FirebaseFirestore.getInstance()
 
-    private val TAG = IntroActivity::class.java.simpleName
+    private val TAG = IntroActivity::class.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
