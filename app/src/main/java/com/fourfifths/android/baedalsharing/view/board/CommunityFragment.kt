@@ -56,7 +56,7 @@ class CommunityFragment : Fragment(), CategoryDialogInterface {
     }
 
     private fun initObserver() {
-        viewModel.boards.observe(viewLifecycleOwner, Observer {
+        viewModel.posts.observe(viewLifecycleOwner, Observer {
             adapter.addBoards(it)
             isLoading = false
         })
@@ -95,7 +95,7 @@ class CommunityFragment : Fragment(), CategoryDialogInterface {
     }
 
     override fun onCategoryButtonClick(category: Long) {
-        val intent = Intent(context, NewBoardActivity::class.java)
+        val intent = Intent(context, NewPostActivity::class.java)
         intent.putExtra("category", category)
         startActivity(intent)
     }

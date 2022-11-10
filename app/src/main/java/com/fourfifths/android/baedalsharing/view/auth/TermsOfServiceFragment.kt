@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.fourfifths.android.baedalsharing.R
 import com.fourfifths.android.baedalsharing.databinding.FragmentTermsOfServiceBinding
 import com.fourfifths.android.baedalsharing.viewmodel.SignUpViewModel
@@ -26,8 +29,16 @@ class TermsOfServiceFragment : Fragment() {
         binding.lifecycleOwner = this.viewLifecycleOwner
 
         binding.btnAccept.setOnClickListener {
-            (activity as SignUpActivity).changeFragment()
+            it.findNavController()
+                .navigate(R.id.action_termsOfServiceFragment_to_completeSignUpFragment)
         }
+
+        viewModel.isAgreed.observe(viewLifecycleOwner, Observer {
+            binding.btnAccept.background = ContextCompat.getDrawable(
+                requireContext(),
+                if (it) R.drawable.view_main_color else R.drawable.view_grey_color
+            )
+        })
 
         return binding.root
     }

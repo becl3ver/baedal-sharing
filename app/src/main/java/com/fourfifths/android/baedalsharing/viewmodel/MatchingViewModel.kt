@@ -8,14 +8,19 @@ import com.fourfifths.android.baedalsharing.data.remote.model.matching.MatchingR
 import com.fourfifths.android.baedalsharing.data.remote.repository.MatchingRepository
 import kotlinx.coroutines.launch
 
-class MatchingViewModel(private val repository: MatchingRepository) : ViewModel() {
+class MatchingViewModel : ViewModel() {
     private val TAG = MatchingViewModel::class.simpleName
+    private val repository: MatchingRepository by lazy {
+        MatchingRepository()
+    }
 
     private val _matchingJoinResult = MutableLiveData<String>()
     val matchingJoinResult: LiveData<String> get() = _matchingJoinResult
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
+
+    val isNowChecked = MutableLiveData(false)
 
     fun setMatching(token: String, matchingRequestDto: MatchingRequestDto) {
         viewModelScope.launch {

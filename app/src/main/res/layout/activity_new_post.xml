@@ -7,13 +7,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.fourfifths.android.baedalsharing.viewmodel.NewBoardViewModel" />
+            type="com.fourfifths.android.baedalsharing.viewmodel.NewPostActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.board.NewBoardActivity">
+        tools:context=".view.board.NewPostActivity">
 
         <EditText
             android:id="@+id/etTitle"

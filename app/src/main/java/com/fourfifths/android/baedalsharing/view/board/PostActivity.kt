@@ -11,41 +11,41 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fourfifths.android.baedalsharing.view.App
 import com.fourfifths.android.baedalsharing.R
-import com.fourfifths.android.baedalsharing.data.remote.model.board.Board
-import com.fourfifths.android.baedalsharing.data.remote.model.board.CommentDataModel
-import com.fourfifths.android.baedalsharing.databinding.ActivityBoardViewBinding
+import com.fourfifths.android.baedalsharing.data.firebase.model.community.Post
+import com.fourfifths.android.baedalsharing.data.firebase.model.community.CommentDataModel
+import com.fourfifths.android.baedalsharing.databinding.ActivityPostBinding
 import com.fourfifths.android.baedalsharing.utils.FirebaseAuthUtils
 import com.fourfifths.android.baedalsharing.viewmodel.CommentViewModel
+import com.fourfifths.android.baedalsharing.viewmodel.PostViewModelFactory
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 
-class BoardViewActivity : AppCompatActivity() {
-    private val TAG = BoardViewActivity::class.java.simpleName
+class PostActivity : AppCompatActivity() {
+    private val TAG = PostActivity::class.java.simpleName
 
-    private lateinit var binding: ActivityBoardViewBinding
+    private lateinit var binding: ActivityPostBinding
     private lateinit var viewModel: CommentViewModel
-    private lateinit var adapter: BoardRecyclerViewAdapter
-    private lateinit var board: Board
+    private lateinit var viewModelFactory: PostViewModelFactory
+    private lateinit var adapter: PostRecyclerViewAdapter
+    private lateinit var post: Post
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_board_view)
-        viewModel = ViewModelProvider(this)[CommentViewModel::class.java]
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_post)
 
         supportActionBar?.hide()
 
-        board = intent.getSerializableExtra("board") as Board
+        post = intent.getSerializableExtra("board") as Post
+
+        viewModelFactory = PostViewModelFactory(post.id)
+        viewModel = ViewModelProvider(this, viewModelFactory)[CommentViewModel::class.java]
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         initRecyclerView()
+        initObserver()
 
-        viewModel.getComments(board.id)
-
-        viewModel.comments.observe(this, Observer {
-            adapter.addComments(it)
-            adapter.notifyItemRangeChanged(0, it.size + 1)
-        })
+        viewModel.getComments()
 
         binding.btnSubmit.setOnClickListener {
             if (binding.etNewComment.text.isEmpty()) {
@@ -61,12 +61,12 @@ class BoardViewActivity : AppCompatActivity() {
                 )
 
                 db.collection("Boards")
-                    .document(board.id).collection("Comments")
+                    .document(post.id).collection("Comments")
                     .add(comment)
                     .addOnSuccessListener {
                         Toast.makeText(this, "작성을 완료하였습니다.", Toast.LENGTH_SHORT).show()
                         binding.etNewComment.setText("")
-                        viewModel.getComments(board.id)
+                        viewModel.getComments()
                     }.addOnFailureListener {
                         Toast.makeText(this, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
                         Log.d(TAG, it.message.toString())
@@ -79,8 +79,15 @@ class BoardViewActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        adapter = BoardRecyclerViewAdapter(board)
+        adapter = PostRecyclerViewAdapter(post)
         binding.rvBoard.adapter = adapter
         binding.rvBoard.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun initObserver() {
+        viewModel.comments.observe(this, Observer {
+            adapter.addComments(it)
+            adapter.notifyItemRangeChanged(0, it.size + 1)
+        })
     }
 }

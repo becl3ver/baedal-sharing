@@ -1,8 +1,8 @@
-package com.fourfifths.android.baedalsharing.data.remote.model.board
+package com.fourfifths.android.baedalsharing.data.firebase.model.community
 
 import com.google.firebase.Timestamp
 
-data class BoardDataModel(
+data class PostDataModel(
     val title: String,
     val content: String,
     val category: Long,

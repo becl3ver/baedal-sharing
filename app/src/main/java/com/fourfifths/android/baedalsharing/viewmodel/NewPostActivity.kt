@@ -4,14 +4,14 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.fourfifths.android.baedalsharing.data.remote.model.board.BoardDataModel
+import com.fourfifths.android.baedalsharing.data.firebase.model.community.PostDataModel
 import com.fourfifths.android.baedalsharing.utils.FirebaseAuthUtils
 import com.fourfifths.android.baedalsharing.view.App
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 
-class NewBoardViewModel : ViewModel() {
-    private val TAG = NewBoardViewModel::class.simpleName
+class NewPostActivity : ViewModel() {
+    private val TAG = NewPostActivity::class.simpleName
 
     val boardTitle = MutableLiveData("")
     val boardContent = MutableLiveData("")
@@ -24,7 +24,7 @@ class NewBoardViewModel : ViewModel() {
 
     var category = 0L
 
-    fun pushNewBoard() {
+    fun pushNewPost() {
         val title = boardTitle.value!!
         val content = boardContent.value!!
 
@@ -33,7 +33,7 @@ class NewBoardViewModel : ViewModel() {
             return
         }
 
-        val boardDataModel = BoardDataModel(
+        val postDataModel = PostDataModel(
             title,
             content,
             category,
@@ -45,7 +45,7 @@ class NewBoardViewModel : ViewModel() {
 
         val db = FirebaseFirestore.getInstance()
 
-        db.collection("Boards").add(boardDataModel)
+        db.collection("Boards").add(postDataModel)
             .addOnSuccessListener {
                 _submitResponse.value = 1
             }

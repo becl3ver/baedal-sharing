@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,7 +13,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.fourfifths.android.baedalsharing.R
+import com.fourfifths.android.baedalsharing.data.remote.model.matching.MatchingRequestDto
 import com.fourfifths.android.baedalsharing.databinding.ActivityMatchingBinding
+import com.fourfifths.android.baedalsharing.utils.FirebaseAuthUtils
 import com.fourfifths.android.baedalsharing.viewmodel.MatchingViewModel
 
 class MatchingActivity : AppCompatActivity() {
@@ -36,15 +39,7 @@ class MatchingActivity : AppCompatActivity() {
 
         supportActionBar?.title = "매칭"
 
-        initNumberPickers()
-
         menu = intent.getIntExtra("menu", 0)
-
-        if (menu < 1 || menu > 7) {
-            Toast.makeText(this, "올바른 메뉴가 아닙니다.", Toast.LENGTH_SHORT).show()
-            Log.d(TAG, "menu isn't selected : $menu")
-            finish()
-        }
 
         getLocationLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -62,10 +57,31 @@ class MatchingActivity : AppCompatActivity() {
             }
         }
 
+        initObserver()
+        initNumberPickers()
+
         binding.btnLocation.setOnClickListener {
             getLocationLauncher.launch(Intent(this, LocationActivity::class.java))
         }
 
+        binding.btnSubmit.setOnClickListener {
+            val isCurrent = binding.rgTime.checkedRadioButtonId == R.id.rbNow
+            val uid = FirebaseAuthUtils.getUid()!!
+            val matchingRequestDto = MatchingRequestDto(
+                uid,
+                binding.rgTime.checkedRadioButtonId == R.id.rbNow,
+                latitude!!,
+                longitude!!,
+                if(isCurrent) 0 else getDueDay(),
+                if(isCurrent) 0 else getDueTime()
+            )
+
+            viewModel.setMatching(uid, matchingRequestDto)
+            finish()
+        }
+    }
+
+    private fun initObserver() {
         viewModel.matchingJoinResult.observe(this, Observer {
             if(it.equals("success")) {
                 finish()
@@ -77,10 +93,13 @@ class MatchingActivity : AppCompatActivity() {
             Toast.makeText(this, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
         })
 
-        binding.btnSubmit.setOnClickListener {
-            // viewModel.setMatching()
-            finish()
-        }
+        viewModel.isNowChecked.observe(this, Observer {
+            if(it) {
+                binding.llTimePickerContainer.visibility = View.VISIBLE
+            } else {
+                binding.llTimePickerContainer.visibility = View.GONE
+            }
+        })
     }
 
     private fun initNumberPickers() {

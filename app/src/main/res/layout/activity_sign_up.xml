@@ -14,11 +14,13 @@
         android:layout_height="match_parent"
         tools:context=".view.auth.SignUpActivity">
 
-        <FrameLayout
-            android:id="@+id/flSignUp"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcvSignUp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/sign_up_nav_graph"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="parent"

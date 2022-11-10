@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.fourfifths.android.baedalsharing.data.remote.model.board.Board
+import com.fourfifths.android.baedalsharing.data.firebase.model.community.Post
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,8 +17,8 @@ class CommunityViewModel : ViewModel() {
     private val TAG = CommunityViewModel::class.simpleName
     private val LOADING_LIMIT = 5L
 
-    private val _boards = MutableLiveData<ArrayList<Board>>()
-    val boards: LiveData<ArrayList<Board>> get() = _boards
+    private val _posts = MutableLiveData<ArrayList<Post>>()
+    val posts: LiveData<ArrayList<Post>> get() = _posts
 
     private val _isLastItemVisible = MutableLiveData(false)
     val isLastItemVisible: LiveData<Boolean> get() = _isLastItemVisible
@@ -44,14 +44,14 @@ class CommunityViewModel : ViewModel() {
             if (value != null && value.documents.size != 0) {
                 lastVisible = value.documents[value.documents.size - 1]
 
-                val tmp = ArrayList<Board>()
+                val items = ArrayList<Post>()
 
                 for (document in value.documents) {
                     Log.d(TAG, document.id)
-                    tmp.add(convertToBoard(document.id, document.data!!))
+                    items.add(convertBoard(document))
                 }
 
-                _boards.value = tmp
+                _posts.value = items
             }
         }
     }
@@ -86,21 +86,22 @@ class CommunityViewModel : ViewModel() {
 
                 lastVisible = value.documents[value.documents.size - 1]
 
-                val tmp = ArrayList<Board>()
+                val items = ArrayList<Post>()
 
                 for (document in value.documents) {
                     Log.d(TAG, document.id)
-                    tmp.add(convertToBoard(document.id, document.data!!))
+                    items.add(convertBoard(document))
                 }
 
-                _boards.value = tmp
+                _posts.value = items
             }
         }
     }
 
-    private fun convertToBoard(id: String, data: Map<String, Any>): Board {
-        return Board(
-            id,
+    private fun convertBoard(document: DocumentSnapshot): Post {
+        val data = document.data!!
+        return Post(
+            document.id,
             data["title"] as String,
             data["content"] as String,
             data["category"] as Long,

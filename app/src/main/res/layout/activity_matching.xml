@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/main_color"
-                android:checked="true"
+                android:checked="@={viewModel.isNowChecked}"
                 android:fontFamily="@font/main_font"
                 android:text="지금!" />
 
@@ -80,7 +80,7 @@
         </RadioGroup>
 
         <LinearLayout
-            android:id="@+id/llNewComment"
+            android:id="@+id/llTimePickerContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"

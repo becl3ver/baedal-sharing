@@ -19,7 +19,7 @@
         android:theme="@style/Theme.BaedalSharing"
         tools:targetApi="31">
         <activity
-            android:name=".view.board.BoardViewActivity"
+            android:name=".view.board.PostActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -57,7 +57,7 @@
         </activity>
 
         <service
-            android:name=".data.fcm.FirebaseService"
+            android:name=".utils.FirebaseService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -83,7 +83,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.board.NewBoardActivity"
+            android:name=".view.board.NewPostActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

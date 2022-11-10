@@ -5,25 +5,25 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.fourfifths.android.baedalsharing.data.remote.model.board.Board
-import com.fourfifths.android.baedalsharing.databinding.ItemBoardBinding
+import com.fourfifths.android.baedalsharing.data.firebase.model.community.Post
 import com.fourfifths.android.baedalsharing.databinding.ItemLoadingBinding
+import com.fourfifths.android.baedalsharing.databinding.ItemPostBinding
 import kotlin.collections.ArrayList
 
 class CommunityRecyclerViewAdapter(private val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val items = ArrayList<Board?>()
+    private val items = ArrayList<Post?>()
     private val VIEW_TYPE_BOARD = 1
     private val VIEW_TYPE_LOADING = 2
 
-    inner class BoardButtonViewHolder(private val binding: ItemBoardBinding) :
-        BoardViewHolder(binding) {
-        override fun bind(board: Board) {
-            super.bind(board)
+    inner class BoardButtonViewHolder(private val binding: ItemPostBinding) :
+        PostViewHolder(binding) {
+        override fun bind(post: Post) {
+            super.bind(post)
 
             binding.clContainer.setOnClickListener {
-                val intent = Intent(context, BoardViewActivity::class.java)
-                intent.putExtra("board", board)
+                val intent = Intent(context, PostActivity::class.java)
+                intent.putExtra("board", post)
                 context.startActivity(intent)
             }
         }
@@ -37,7 +37,7 @@ class CommunityRecyclerViewAdapter(private val context: Context) :
         return when (viewType) {
             VIEW_TYPE_BOARD -> {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemBoardBinding.inflate(layoutInflater, parent, false)
+                val binding = ItemPostBinding.inflate(layoutInflater, parent, false)
                 BoardButtonViewHolder(binding)
             }
             else -> {
@@ -62,12 +62,12 @@ class CommunityRecyclerViewAdapter(private val context: Context) :
         return items.size
     }
 
-    fun addBoards(boards: MutableList<Board>) {
+    fun addBoards(posts: MutableList<Post>) {
         if(items.isNotEmpty()) {
             items.removeLast()
         }
 
-        items.addAll(boards)
+        items.addAll(posts)
         items.add(null)
         notifyDataSetChanged()
     }

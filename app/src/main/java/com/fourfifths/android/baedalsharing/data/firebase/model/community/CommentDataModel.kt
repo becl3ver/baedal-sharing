@@ -1,4 +1,4 @@
-package com.fourfifths.android.baedalsharing.data.remote.model.board
+package com.fourfifths.android.baedalsharing.data.firebase.model.community
 
 import com.google.firebase.Timestamp
 
@@ -7,4 +7,4 @@ data class CommentDataModel(
     val nickname: String,
     val timestamp: Timestamp,
     val content: String
-    )
+)

@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         val navigator = KeepStateFragment(this, navHostFragment.childFragmentManager, binding.fcvMain.id)
 
         navController.navigatorProvider.addNavigator(navigator)
-        navController.setGraph(R.navigation.nav_graph)
+        navController.setGraph(R.navigation.main_nav_graph)
         binding.mnuSelect.setupWithNavController(navController)
     }
 }

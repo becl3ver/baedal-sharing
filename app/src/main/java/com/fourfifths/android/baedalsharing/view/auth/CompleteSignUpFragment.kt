@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.fourfifths.android.baedalsharing.R
-import com.fourfifths.android.baedalsharing.data.remote.model.user.UserDataModel
+import com.fourfifths.android.baedalsharing.data.firebase.model.user.UserDataModel
 import com.fourfifths.android.baedalsharing.databinding.FragmentCompleteSignUpBinding
 import com.fourfifths.android.baedalsharing.utils.FirebaseAuthUtils
 import com.fourfifths.android.baedalsharing.view.MainActivity

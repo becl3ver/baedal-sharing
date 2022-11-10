@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".view.board.BoardViewActivity">
+        tools:context=".view.board.PostActivity">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBoard"

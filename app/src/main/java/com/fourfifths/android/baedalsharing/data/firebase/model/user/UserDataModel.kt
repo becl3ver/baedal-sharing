@@ -1,4 +1,4 @@
-package com.fourfifths.android.baedalsharing.data.remote.model.user
+package com.fourfifths.android.baedalsharing.data.firebase.model.user
 
 data class UserDataModel(
     val uid: String,

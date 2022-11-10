@@ -1,8 +1,8 @@
-package com.fourfifths.android.baedalsharing.data.remote.model.board
+package com.fourfifths.android.baedalsharing.data.firebase.model.community
 
 import java.io.Serializable
 
-data class Board(
+data class Post(
     val id: String,
     val title: String,
     val content: String,

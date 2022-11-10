@@ -1,9 +1,12 @@
 package com.fourfifths.android.baedalsharing.viewmodel
 
 import android.graphics.Color
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.fourfifths.android.baedalsharing.R
 
 class SignUpViewModel : ViewModel() {
     private val TAG = SignUpViewModel::class.java.simpleName

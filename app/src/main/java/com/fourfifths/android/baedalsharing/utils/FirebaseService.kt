@@ -1,4 +1,4 @@
-package com.fourfifths.android.baedalsharing.data.fcm
+package com.fourfifths.android.baedalsharing.utils
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
